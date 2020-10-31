@@ -22,13 +22,22 @@ layout: default
     <div id="content" class="leading-relaxed text-lg">
         {{ content | safe }}
     </div>
-    <div>
-        {% set nextPost = collections.post | getNextCollectionItem(page) %}
-  {% if nextPost %}<p>Next article: <a href="{{ nextPost.url }}">{{ nextPost.data.title }}</a></p>{% endif %}
-
-  {% set previousPost = collections.post | getPreviousCollectionItem(page) %}
-  {% if previousPost %}<p>Previous article: <a href="{{ previousPost.url }}">{{ previousPost.data.title }}</a></p>{% endif %}
-  </div>
+    <div class="mt-3 clearfix">
+    <span class="float-left bg-white font-semibold py-2 px-4 border rounded shadow-md text-gray-800 {% if not paged.first %}cursor-pointer hover:bg-gray-100{% else %}cursor-default text-opacity-75{% endif %}">
+        {% if not paged.first %}
+        <a href="{{ pagination.href.previous }}">Previous</a>
+        {% else %}
+        Previous
+        {% endif %}
+    </span>
+    <span class="float-right bg-white font-semibold py-2 px-4 border rounded shadow-md text-gray-800 {% if not paged.last %}cursor-pointer hover:bg-gray-100{% else %}cursor-default text-opacity-75{% endif %}">
+        {% if not paged.last %}
+        <a href="{{ pagination.href.next }}">Next</a>
+        {% else %}
+        Next
+        {% endif %}
+    </span>
+</div>
     {% if site.disqusShortname %}
     <div class="mt-10">
         {% if process.environment === "production" %}
