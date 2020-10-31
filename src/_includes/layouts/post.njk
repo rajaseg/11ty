@@ -22,6 +22,13 @@ layout: default
     <div id="content" class="leading-relaxed text-lg">
         {{ content | safe }}
     </div>
+    <div>
+        {% set nextPost = collections.post | getNextCollectionItem(page) %}
+  {% if nextPost %}<p>Next article: <a href="{{ nextPost.url }}">{{ nextPost.data.title }}</a></p>{% endif %}
+
+  {% set previousPost = collections.post | getPreviousCollectionItem(page) %}
+  {% if previousPost %}<p>Previous article: <a href="{{ previousPost.url }}">{{ previousPost.data.title }}</a></p>{% endif %}
+  </div>
     {% if site.disqusShortname %}
     <div class="mt-10">
         {% if process.environment === "production" %}
